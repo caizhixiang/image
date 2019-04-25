@@ -1,0 +1,108 @@
+
+server: 
+    port: 80
+    context-path: /image
+    use-forward-headers: true
+    tomcat:
+      protocol-header: X-Forwarded-Proto
+      remote-ip-header: X-Forwarded-For
+      port-header: X-Forwarded-Port
+      max-threads: 1000
+    session: 
+      timeout: 7200
+spring: 
+  session:
+    store-type: none
+  http:
+    converters:
+      preferred-json-mapper: jackson
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+    multipart:
+      enabled: true
+      max-file-size: 10Mb
+      max-request-size: 10Mb
+  main:
+    banner-mode: 'OFF'
+  application:
+    name: ziku-forte-admin
+    version: '@project.version@'
+  datasource: 
+    url: jdbc:mysql://caizhixiang168.vip:3306/website?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: 123456
+    driverClassName: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      transaction-query-timeout: 10000
+      queryTimeout: 10000
+      filters: stat,wall
+      initialSize: 10
+      minIdle: 5
+      maxActive: 100
+      maxWait: 60000
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      testOnBorrow: false
+      testOnReturn: false
+      validationQuery:  select 1
+      testWhileIdle: true
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      web-stat-filter:
+       url-pattern: /*
+      stat-view-servlet:
+        url-pattern: /druid/*
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    default-property-inclusion: ALWAYS
+    deserialization:
+        fail-on-unknown-properties: false
+    generator:
+        write-bigdecimal-as-plain: true
+    joda-date-time-format: yyyy-MM-dd HH:mm:ss
+    parser:
+      allow-unquoted-field-names: true
+      allow-single-quotes: true
+    serialization:
+      fail-on-empty-beans: false
+      write-dates-as-timestamps: false
+      write-enums-using-to-string: true
+    time-zone: GMT+8
+  mvc:
+    date-format: yyyy-MM-dd HH:mm:ss
+    dispatch-options-request: true
+    static-path-pattern: /static/**
+    throw-exception-if-no-handler-found: true
+  resources:
+        add-mappings: true
+        cache-period: 0
+  thymeleaf:
+    cache: false
+    check-template: true
+    check-template-location: true
+    content-type: text/html
+    enabled: true
+    encoding: UTF-8
+    prefix: classpath:/templates/
+
+security: 
+  basic:
+    enabled: false
+logging:
+  file: /var/log/cai-ms/${spring.application.name}.log
+  level:
+    root: INFO
+    druid.sql.DataSource: DEBUG
+    druid.sql.Connection: DEBUG
+    druid.sql.Statement: DEBUG
+    druid.sql.ResultSet: DEBUG
+    java.sql: DEBUG
+    com.ibatis: DEBUG
+    com.ibatis.common.jdbc.ScriptRunner: INFO
+    com.ibatis.common.jdbc.SimpleDataSource: INFO
+    org.springframework.web: DEBUG
+    com.ziku.forte: DEBUG
