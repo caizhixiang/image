@@ -1,6 +1,8 @@
 package com.caizhixiang.springboot.service;
 
 import com.caizhixiang.springboot.mapper.entity.Image;
+import com.caizhixiang.springboot.service.DTO.ImageDTO;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -14,4 +16,13 @@ import java.util.List;
 public interface ImageService {
 
     List<Image> findAll();
+
+    PageInfo<Image> findPage(Integer position, Integer pageNo, Integer pageSize);
+
+    void saveOrUpdate(Image image);
+
+    void remove(Integer id);
+
+    ImageDTO findById(Integer id);
+
 }

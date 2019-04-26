@@ -30,7 +30,7 @@ spring:
     name: ziku-forte-admin
     version: '@project.version@'
   datasource: 
-    url: jdbc:mysql://caizhixiang168.vip:3306/website?useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://caizhixiang168.vip:3306/website?useSSL=false&useUnicode=true&characterEncoding=UTF-8
     username: root
     password: 123456
     driverClassName: com.mysql.jdbc.Driver
