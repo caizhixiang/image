@@ -1,4 +1,3 @@
-
 var fileInput = document.getElementById("file");
 //选择文件
 fileInput.addEventListener('change', function () {
@@ -9,17 +8,7 @@ fileInput.addEventListener('change', function () {
     }
 
     var file = fileInput.files[0];
-
-    //FileReader可直接将上传文件转化为二进制流
-    var reader = new FileReader();
-    reader.readAsDataURL(file);//转化二进制流，异步方法
-    reader.onload = function () {//完成后this.result为二进制流
-        //页面显示文件名
-        $("#name").val(file.name);
-        $("#url").val(this.result);
-        $('img').attr("src", this.result);
-
-    }
+    $("#name").val(file.name);
 
 
     var formData = new FormData();
@@ -30,9 +19,11 @@ fileInput.addEventListener('change', function () {
         data: formData,
         processData: false,
         contentType: false,
-        success: function (msg) {
-            $("#imageId").val(msg);
-            debugger;
+        success: function (data) {
+            if (data.errorCode == 0) {
+                $('img').attr("src", data.data);
+                $("#image").val(data.data);
+            }
         }
     });
 
@@ -45,9 +36,7 @@ function back() {
 }
 
 
-
 function save() {
-
 
 
     $.ajax({
@@ -57,13 +46,12 @@ function save() {
         data: $('#signupForm').serialize(),// 你的formid
         async: false,
         success: function (data) {
-            if (data == "success") {
 
-                parent.layer.msg("保存成功");
+            if (data.errorCode == 0) {
+                parent.layer.msg(data.errorMsg);
                 parent.reLoad();
                 var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
                 parent.layer.close(index);
-
             } else {
                 parent.layer.alert("保存数据失败")
             }

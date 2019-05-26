@@ -1,7 +1,6 @@
 package com.caizhixiang.springboot.service;
 
 import com.caizhixiang.springboot.mapper.entity.Image;
-import com.caizhixiang.springboot.service.DTO.ImageDTO;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
@@ -23,6 +22,6 @@ public interface ImageService {
 
     void remove(Integer id);
 
-    ImageDTO findById(Integer id);
+    Image findById(Integer id);
 
 }

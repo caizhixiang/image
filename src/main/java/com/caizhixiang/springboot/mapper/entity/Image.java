@@ -21,6 +21,11 @@ public class Image implements Serializable {
     private String name;
 
     /**
+     * å›¾ç‰‡åœ°å�€
+     */
+    private String url;
+
+    /**
      * å›¾ç‰‡è¯´æ˜Ž
      */
     private String description;
@@ -31,9 +36,14 @@ public class Image implements Serializable {
     private String link;
 
     /**
-     * æ‰€å¤„ä½�ç½®ï¼ˆ1-ä¸»é¡µå›¾ç‰‡ï¼Œ2-è¯¦ç»†å›¾ç‰‡ï¼‰
+     * æ‰€å¤„ä½�ç½®ï¼ˆå¯¹åº”dicté‡Œé�¢category=1æ—¶çš„dict_idï¼‰
      */
     private Integer position;
+
+    /**
+     * å›¾ç‰‡çš„ç±»åˆ«ï¼ˆå¯¹åº”dictè¡¨é‡Œcategory=2æ—¶çš„dict_idï¼‰
+     */
+    private Integer category;
 
     /**
      * æŽ’åº�
@@ -45,11 +55,6 @@ public class Image implements Serializable {
      */
     @Column(name = "gmt_create")
     private Date gmtCreate;
-
-    /**
-     * å›¾ç‰‡åœ°å�€
-     */
-    private byte[] url;
 
     private static final long serialVersionUID = 1L;
 
@@ -104,6 +109,24 @@ public class Image implements Serializable {
     }
 
     /**
+     * 获取å›¾ç‰‡åœ°å�€
+     *
+     * @return url - å›¾ç‰‡åœ°å�€
+     */
+    public String getUrl() {
+        return url;
+    }
+
+    /**
+     * 设置å›¾ç‰‡åœ°å�€
+     *
+     * @param url å›¾ç‰‡åœ°å�€
+     */
+    public void setUrl(String url) {
+        this.url = url == null ? null : url.trim();
+    }
+
+    /**
      * 获取å›¾ç‰‡è¯´æ˜Ž
      *
      * @return description - å›¾ç‰‡è¯´æ˜Ž
@@ -140,21 +163,39 @@ public class Image implements Serializable {
     }
 
     /**
-     * 获取æ‰€å¤„ä½�ç½®ï¼ˆ1-ä¸»é¡µå›¾ç‰‡ï¼Œ2-è¯¦ç»†å›¾ç‰‡ï¼‰
+     * 获取æ‰€å¤„ä½�ç½®ï¼ˆå¯¹åº”dicté‡Œé�¢category=1æ—¶çš„dict_idï¼‰
      *
-     * @return position - æ‰€å¤„ä½�ç½®ï¼ˆ1-ä¸»é¡µå›¾ç‰‡ï¼Œ2-è¯¦ç»†å›¾ç‰‡ï¼‰
+     * @return position - æ‰€å¤„ä½�ç½®ï¼ˆå¯¹åº”dicté‡Œé�¢category=1æ—¶çš„dict_idï¼‰
      */
     public Integer getPosition() {
         return position;
     }
 
     /**
-     * 设置æ‰€å¤„ä½�ç½®ï¼ˆ1-ä¸»é¡µå›¾ç‰‡ï¼Œ2-è¯¦ç»†å›¾ç‰‡ï¼‰
+     * 设置æ‰€å¤„ä½�ç½®ï¼ˆå¯¹åº”dicté‡Œé�¢category=1æ—¶çš„dict_idï¼‰
      *
-     * @param position æ‰€å¤„ä½�ç½®ï¼ˆ1-ä¸»é¡µå›¾ç‰‡ï¼Œ2-è¯¦ç»†å›¾ç‰‡ï¼‰
+     * @param position æ‰€å¤„ä½�ç½®ï¼ˆå¯¹åº”dicté‡Œé�¢category=1æ—¶çš„dict_idï¼‰
      */
     public void setPosition(Integer position) {
         this.position = position;
+    }
+
+    /**
+     * 获取å›¾ç‰‡çš„ç±»åˆ«ï¼ˆå¯¹åº”dictè¡¨é‡Œcategory=2æ—¶çš„dict_idï¼‰
+     *
+     * @return category - å›¾ç‰‡çš„ç±»åˆ«ï¼ˆå¯¹åº”dictè¡¨é‡Œcategory=2æ—¶çš„dict_idï¼‰
+     */
+    public Integer getCategory() {
+        return category;
+    }
+
+    /**
+     * 设置å›¾ç‰‡çš„ç±»åˆ«ï¼ˆå¯¹åº”dictè¡¨é‡Œcategory=2æ—¶çš„dict_idï¼‰
+     *
+     * @param category å›¾ç‰‡çš„ç±»åˆ«ï¼ˆå¯¹åº”dictè¡¨é‡Œcategory=2æ—¶çš„dict_idï¼‰
+     */
+    public void setCategory(Integer category) {
+        this.category = category;
     }
 
     /**
@@ -193,24 +234,6 @@ public class Image implements Serializable {
         this.gmtCreate = gmtCreate;
     }
 
-    /**
-     * 获取å›¾ç‰‡åœ°å�€
-     *
-     * @return url - å›¾ç‰‡åœ°å�€
-     */
-    public byte[] getUrl() {
-        return url;
-    }
-
-    /**
-     * 设置å›¾ç‰‡åœ°å�€
-     *
-     * @param url å›¾ç‰‡åœ°å�€
-     */
-    public void setUrl(byte[] url) {
-        this.url = url;
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -220,12 +243,13 @@ public class Image implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", parentId=").append(parentId);
         sb.append(", name=").append(name);
+        sb.append(", url=").append(url);
         sb.append(", description=").append(description);
         sb.append(", link=").append(link);
         sb.append(", position=").append(position);
+        sb.append(", category=").append(category);
         sb.append(", sort=").append(sort);
         sb.append(", gmtCreate=").append(gmtCreate);
-        sb.append(", url=").append(url);
         sb.append("]");
         return sb.toString();
     }

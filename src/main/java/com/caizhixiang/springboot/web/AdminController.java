@@ -1,24 +1,37 @@
 package com.caizhixiang.springboot.web;
 
+
+import com.caizhixiang.springboot.config.PropertyFtpConfig;
+import com.caizhixiang.springboot.exception.BizException;
+import com.caizhixiang.springboot.ftp.FtpClient;
+import com.caizhixiang.springboot.mapper.entity.Dict;
 import com.caizhixiang.springboot.mapper.entity.Image;
-import com.caizhixiang.springboot.service.DTO.ImageDTO;
+import com.caizhixiang.springboot.service.DictService;
 import com.caizhixiang.springboot.service.ImageService;
+import com.caizhixiang.springboot.service.enums.DictEnum;
+import com.caizhixiang.springboot.service.enums.ErrorCodeEnum;
+import com.caizhixiang.springboot.web.vo.ApiResult;
 import com.github.pagehelper.PageInfo;
-import com.sun.javafx.sg.prism.web.NGWebView;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import sun.misc.BASE64Encoder;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import javax.imageio.ImageIO;
+import javax.swing.filechooser.FileSystemView;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -33,10 +46,20 @@ import java.util.List;
 public class AdminController {
     @Autowired
     ImageService imageService;
+    @Autowired
+    private FtpClient ftpClient;
+    @Autowired
+    private PropertyFtpConfig propertyFtpConfig;
+    @Autowired
+    private DictService dictService;
 
     @RequestMapping("/index")
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView();
+
+        List<Dict> positions = dictService.findByCategory(DictEnum.IMAGE_POSITION.getCode());
+
+        modelAndView.addObject("positions", positions);
         modelAndView.setViewName("admin/index");
         return modelAndView;
     }
@@ -44,14 +67,17 @@ public class AdminController {
     @RequestMapping("/add")
     public ModelAndView toAddPage() {
         ModelAndView modelAndView = new ModelAndView();
+        List<Dict> positions = dictService.findByCategory(DictEnum.IMAGE_POSITION.getCode());
+
+        modelAndView.addObject("positions", positions);
         modelAndView.setViewName("admin/add");
         return modelAndView;
     }
 
     @RequestMapping("/edit/{id}")
-    public ModelAndView toEditPage(Model model,@PathVariable Integer id) {
+    public ModelAndView toEditPage(Model model, @PathVariable Integer id) {
         ModelAndView modelAndView = new ModelAndView();
-        ImageDTO image = imageService.findById(id);
+        Image image = imageService.findById(id);
         modelAndView.addObject("image", image);
         modelAndView.setViewName("admin/edit");
         return modelAndView;
@@ -65,30 +91,52 @@ public class AdminController {
     }
 
     @RequestMapping("/saveOrUpdate")
-    public String saveOrUpdate(Image image) {
+    public ApiResult saveOrUpdate( Image image) throws IOException {
 
         imageService.saveOrUpdate(image);
-        return "success";
+        return new ApiResult();
     }
+
     @RequestMapping("/remove")
-    public String remove(Integer id) {
+    public ApiResult remove(Integer id) {
 
         imageService.remove(id);
-        return "success";
+        return new ApiResult<>();
     }
 
 
     @RequestMapping("/upload")
     @ResponseBody
-    Integer upload(@RequestParam("file") MultipartFile file) throws Exception{
+    ApiResult upload(@RequestParam("file") MultipartFile file, Integer id) throws Exception {
+        String originalFilename = file.getOriginalFilename();
+        Boolean flag = ftpClient.uploadFile(originalFilename, file.getInputStream());
+        if (!flag) {
+            throw new BizException(ErrorCodeEnum.UPLOADFILEERROR);
+        }
+        String fileUrl = this.appendUrl(propertyFtpConfig.getUrlPrefix(), originalFilename);
 
-        byte[] bytes = file.getBytes();
-        Image image = new Image();
-        image.setUrl(bytes);
-        imageService.saveOrUpdate(image);
-
-
-        return image.getId();
+        return new ApiResult(fileUrl);
     }
+
+    public String appendUrl(String first, String second) {
+        if (StringUtils.isEmpty(first)) {
+            return second;
+        }
+        if (StringUtils.isEmpty(second)) {
+            return first;
+        }
+        // 两个衔接的均有斜杠
+        if (first.endsWith("/") && second.startsWith("/")) {
+            return first + second.substring(1);
+        }
+        // 两个衔接的均没有斜杠
+        if (!first.endsWith("/") && !second.startsWith("/")) {
+            return first + "/" + second;
+        }
+        return first + second;
+    }
+
+
+
 
 }

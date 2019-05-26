@@ -2,16 +2,13 @@ package com.caizhixiang.springboot.service.impl;
 
 import com.caizhixiang.springboot.mapper.ImageMapper;
 import com.caizhixiang.springboot.mapper.entity.Image;
-import com.caizhixiang.springboot.service.DTO.ImageDTO;
 import com.caizhixiang.springboot.service.ImageService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.ArrayUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.misc.BASE64Encoder;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.Date;
 import java.util.List;
@@ -36,9 +33,11 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public PageInfo<Image> findPage(Integer position, Integer pageNo, Integer pageSize) {
         PageHelper.startPage(pageNo, pageSize);
-        Image image = new Image();
-        image.setPosition(position);
-        List<Image> list = mapper.select(image);
+        Example example = new Example(Image.class);
+        example.createCriteria().andEqualTo("position", position);
+        example.setOrderByClause("position Asc,sort ASC");
+
+        List<Image> list = mapper.selectByExample(example);
         return new PageInfo<>(list);
     }
 
@@ -58,19 +57,9 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public ImageDTO findById(Integer id) {
-        ImageDTO dto = new ImageDTO();
-        Image image = mapper.selectByPrimaryKey(id);
-        if (image != null) {
-            BeanUtils.copyProperties(image, dto);
-            byte[] url = image.getUrl();
-            if (ArrayUtils.isNotEmpty(url)) {
-                BASE64Encoder encoder = new BASE64Encoder();
-                String encode = encoder.encode(url);
-                dto.setUrl("data:image/jpeg;base64,"+encode);
-            }
-        }
-        return dto;
+    public Image findById(Integer id) {
+        return mapper.selectByPrimaryKey(id);
+
     }
 
 }

@@ -66,7 +66,13 @@ function load() {
                    /* {
                         checkbox : true
                     },*/
-
+                    {
+                        title: '',//标题  可不加
+                        align: 'center',
+                        formatter: function (value, row, index) {
+                            return index+1;
+                        }
+                    },
                     {
                         field : 'name',
                         title : '图片名',
@@ -79,8 +85,7 @@ function load() {
                         formatter:function (value,row,index) {
 
                             if (value) {
-                                value = "data:image/jpeg;base64," + value;
-                                return "<img class='pimg' data-action=\"zoom\" src='"+value+"' style='width: 100px;height: 100px;'/>";
+                                return "<img class='pimg' src='"+value+"' style='width: 100px;height: 100px;'/>";
                             }
                         }
                     },
@@ -99,12 +104,12 @@ function load() {
                         title : '图片所处位置',
                         align : 'center',
                         formatter : function(value, row, index) {
-                            if (value =='21001') {
-                                return '<span class="label label-danger">案场负责人</span>';
-                            } else if (value =='21002') {
-                                return '<span class="label label-primary">吧台服务员</span>';
-                            }else if (value =='21003') {
-                                return '<span class="label label-primary">投诉/报修服务员</span>';
+                            if (value =='1') {
+                                return '<span class="label label-danger">轮播图</span>';
+                            } else if (value =='2') {
+                                return '<span class="label label-primary">首页普通图</span>';
+                            }else if (value =='3') {
+                                return '<span class="label label-primary">详情图</span>';
                             }
                         }
                     },
@@ -166,7 +171,7 @@ function remove(id) {
                 'id' : id
             },
             success : function(r) {
-                if (r.errorCode == 1) {
+                if (r.errorCode == 0) {
                     layer.msg(r.errorMsg);
                     reLoad();
                 } else {
@@ -190,67 +195,3 @@ function edit(id) {
     });
 }
 
-function exportsAll() {
-    if ($("td").hasClass("dataTables_empty")) {
-        layer.msg("列表无数据");
-        return;
-    }
-    window.top.layer.open({
-        content : '是否导出所有数据?',
-        btn : [ '确认', '取消' ],
-        closeBtn : false,
-        shadeClose : true,
-        yes : function(index, layero) {
-            window.location.href = "liable/exportData?companyId=" + $('#companyName').val() + "&buildingId=" + $('#projectName').val() + "&position="
-                + $('#position').val() + "&phone=" + $('#phone').val()
-            window.parent.layer.close(index);
-        }
-    });
-}
-
-
-    function click11(o){
-        var large_image = '<img src= ' + o.src + '></img>';
-        $('#dialog_large_image').html($(large_image));
-
-    }
-
-
-function imgShow(outerdiv, innerdiv, bigimg, _this){
-    var src = _this.attr("src");//获取当前点击的pimg元素中的src属性
-    $(bigimg).attr("src", src);//设置#bigimg元素的src属性
-
-    /*获取当前点击图片的真实大小，并显示弹出层及大图*/
-    $("<img/>").attr("src", src).load(function(){
-        var windowW = $(window).width();//获取当前窗口宽度
-        var windowH = $(window).height();//获取当前窗口高度
-        var realWidth = this.width;//获取图片真实宽度
-        var realHeight = this.height;//获取图片真实高度
-        var imgWidth, imgHeight;
-        var scale = 0.8;//缩放尺寸，当图片真实宽度和高度大于窗口宽度和高度时进行缩放
-
-        if(realHeight>windowH*scale) {//判断图片高度
-            imgHeight = windowH*scale;//如大于窗口高度，图片高度进行缩放
-            imgWidth = imgHeight/realHeight*realWidth;//等比例缩放宽度
-            if(imgWidth>windowW*scale) {//如宽度扔大于窗口宽度
-                imgWidth = windowW*scale;//再对宽度进行缩放
-            }
-        } else if(realWidth>windowW*scale) {//如图片高度合适，判断图片宽度
-            imgWidth = windowW*scale;//如大于窗口宽度，图片宽度进行缩放
-            imgHeight = imgWidth/realWidth*realHeight;//等比例缩放高度
-        } else {//如果图片真实高度和宽度都符合要求，高宽不变
-            imgWidth = realWidth;
-            imgHeight = realHeight;
-        }
-        $(bigimg).css("width",imgWidth);//以最终的宽度对图片缩放
-
-        var w = (windowW-imgWidth)/2;//计算图片与窗口左边距
-        var h = (windowH-imgHeight)/2;//计算图片与窗口上边距
-        $(innerdiv).css({"top":h, "left":w});//设置#innerdiv的top和left属性
-        $(outerdiv).fadeIn("fast");//淡入显示#outerdiv及.pimg
-    });
-
-    $(outerdiv).click(function(){//再次点击淡出消失弹出层
-        $(this).fadeOut("fast");
-    });
-}

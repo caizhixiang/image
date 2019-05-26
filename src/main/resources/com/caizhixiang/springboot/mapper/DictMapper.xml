@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.caizhixiang.springboot.mapper.DictMapper">
+  <resultMap id="BaseResultMap" type="com.caizhixiang.springboot.mapper.entity.Dict">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="dict_name" jdbcType="VARCHAR" property="dictName" />
+    <result column="category" jdbcType="TINYINT" property="category" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+  </resultMap>
+</mapper>

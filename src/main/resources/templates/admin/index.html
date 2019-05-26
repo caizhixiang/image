@@ -22,14 +22,10 @@
             <div class="ibox">
                 <div class="ibox-body">
                     <div class="fixed-table-toolbar">
-
-
                         <div class="columns pull-left col-md-3 ">
                             <select class="form-control" id="position">
                                 <option value="">--请选择位置--</option>
-                                <option value="1">轮播图</option>
-                                <option value="2">首页普通图</option>
-                                <option value="3">详情图</option>
+                                <option th:each="position:${positions}" th:value="${position.getId()}" th:text="${position.getDictName()}"></option>
                             </select>
                         </div>
                     </div>
@@ -52,5 +48,37 @@
 <div th:include="include :: footer"></div>
 
 <script type="text/javascript" th:src="@{/static/js/appjs/admin/admin.js}"></script>
+<script type="text/javascript">
+    var fileInput = document.getElementById("file");
+    //选择文件
+    fileInput.addEventListener('change', function () {
+
+        //如果未传入文件则中断
+        if (fileInput.files[0] == undefined) {
+            return;
+        }
+
+        var file = fileInput.files[0];
+        $("#name").val(file.name);
+
+
+        var formData = new FormData();
+        formData.append("excel", $("#file")[0].files[0]);
+        $.ajax({
+            url: 'uploadExcel',
+            type: 'post',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                if (data.errorCode == 0) {
+
+                }
+            }
+        });
+
+    })
+
+</script>
 </body>
 </html>

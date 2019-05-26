@@ -10,7 +10,7 @@
     <link th:href="@{/static/css/plugins/bootstrap-table/bootstrap-table.min.css}" rel="stylesheet"/>
     <link th:href="@{/static/css/style.css}" rel="stylesheet"/>
     <link rel="stylesheet" th:href="@{/static/css/jquery-ui.css}"/>
-    <link th:href="@{/static/css/zoom.css}" rel="stylesheet">
+    <link th:href="@{/static/css/zoom.css}" rel="stylesheet"/>
 
 </head>
 <body>
@@ -25,8 +25,8 @@
                             <div class="col-sm-8">
                                 <input id="file" type="file" accept="image/jpeg, image/png, image/jpg"
                                        class="form-control"/>
-                                <img id="image" style="height: 200px;width: 200px;"/>
-                                <input type="hidden" id="imageId" name="id"/>
+                                <img style="height: 200px;width: 200px;"/>
+                                <input type="hidden" name="url" id="image"/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -54,9 +54,7 @@
                             <div class="col-sm-8">
                                 <select class="form-control" id="position" name="position">
                                     <option value="">--请选择位置--</option>
-                                    <option value="1">轮播图</option>
-                                    <option value="2">首页普通图</option>
-                                    <option value="3">详情图</option>
+                                    <option th:each="position:${positions}" th:value="${position.getId()}" th:text="${position.getDictName()}"></option>
                                 </select>
                             </div>
                         </div>
@@ -84,8 +82,8 @@
 
 <script type="text/javascript" th:src="@{/static/js/jquery.min.js}"></script>
 <script type="text/javascript" th:src="@{/static/js/bootstrap.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/appjs/admin/add.js}"></script>
 <script type="text/javascript" th:src="@{/static/js/zoom.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/appjs/admin/add.js}"></script>
 
 <script type="text/javascript">
 

@@ -1,6 +1,6 @@
 
 server: 
-    port: 80
+    port: 8080
     context-path: /image
     use-forward-headers: true
     tomcat:
@@ -10,7 +10,8 @@ server:
       max-threads: 1000
     session: 
       timeout: 7200
-spring: 
+
+spring:
   session:
     store-type: none
   http:
@@ -22,15 +23,15 @@ spring:
       force: true
     multipart:
       enabled: true
-      max-file-size: 10Mb
-      max-request-size: 10Mb
+      max-file-size: 13Mb
+      max-request-size: 13Mb
   main:
     banner-mode: 'OFF'
   application:
     name: ziku-forte-admin
     version: '@project.version@'
   datasource: 
-    url: jdbc:mysql://caizhixiang168.vip:3306/website?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://www.zhiab.com:3306/website?useSSL=false&useUnicode=true&characterEncoding=UTF-8
     username: root
     password: 123456
     driverClassName: com.mysql.jdbc.Driver
@@ -106,3 +107,15 @@ logging:
     com.ibatis.common.jdbc.SimpleDataSource: INFO
     org.springframework.web: DEBUG
     com.ziku.forte: DEBUG
+
+
+#平台配置参数
+image:
+  platform:
+    #FTP
+    server: 101.132.76.209
+    port: 21
+    userName: root
+    password: 123456
+    location: /images/
+    urlPrefix: http://www.zhiab.com/images/
