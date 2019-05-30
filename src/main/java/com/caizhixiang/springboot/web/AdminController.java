@@ -10,6 +10,7 @@ import com.caizhixiang.springboot.service.DictService;
 import com.caizhixiang.springboot.service.ImageService;
 import com.caizhixiang.springboot.service.enums.DictEnum;
 import com.caizhixiang.springboot.service.enums.ErrorCodeEnum;
+import com.caizhixiang.springboot.service.util.ImageUtil;
 import com.caizhixiang.springboot.web.vo.ApiResult;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -110,7 +111,7 @@ public class AdminController {
     @ResponseBody
     ApiResult upload(@RequestParam("file") MultipartFile file, Integer id) throws Exception {
         String originalFilename = file.getOriginalFilename();
-        Boolean flag = ftpClient.uploadFile(originalFilename, file.getInputStream());
+        Boolean flag = ftpClient.uploadFile(originalFilename, ImageUtil.saveMinPhoto(file.getInputStream()));
         if (!flag) {
             throw new BizException(ErrorCodeEnum.UPLOADFILEERROR);
         }
