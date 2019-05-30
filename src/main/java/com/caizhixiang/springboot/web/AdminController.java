@@ -101,6 +101,7 @@ public class AdminController {
     public ApiResult remove(Integer id) {
 
         imageService.remove(id);
+
         return new ApiResult<>();
     }
 

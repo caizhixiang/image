@@ -180,13 +180,34 @@ public class FtpClient {
 			String path = FilenameUtils.getPathNoEndSeparator(fileName);
 			if (createDir(ftpClient, path)) {
 				String name = FilenameUtils.getName(fileName);
-				return ftpClient.storeFile(new String(name.getBytes("utf-8"),"8859_1"), iStream);
+				return ftpClient.storeFile(new String(name.getBytes("UTF-8"),"iso-8859-1"), iStream);
 			} else {
 				throw new IOException("change or make directory error!");
 			}
 		} finally {
 			closeFTPClient(ftpClient);
 			IOUtils.closeQuietly(iStream);
+		}
+	}
+	/**
+	 * 删除文件
+	 *
+	 * @param fileName
+	 * @throws IOException
+	 */
+	public boolean deleteFile(String fileName) throws IOException {
+		FTPClient ftpClient = null;
+		try {
+			ftpClient = createFTPClient();
+			String path = FilenameUtils.getPathNoEndSeparator(fileName);
+			if (createDir(ftpClient, path)) {
+				String name = FilenameUtils.getName(fileName);
+				return ftpClient.deleteFile(new String(name.getBytes("utf-8"),"8859_1"));
+			} else {
+				throw new IOException("change or make directory error!");
+			}
+		} finally {
+			closeFTPClient(ftpClient);
 		}
 	}
 }
