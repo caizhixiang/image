@@ -37,8 +37,6 @@ function back() {
 
 
 function save() {
-
-
     $.ajax({
         cache: true,
         type: "POST",

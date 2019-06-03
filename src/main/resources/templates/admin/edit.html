@@ -3,106 +3,86 @@
 <meta charset="utf-8"/>
 <head>
     <title></title>
-    <link th:href="@{/static/css/bootstrap.min.css}" rel="stylesheet"/>
-    <link th:href="@{/static/css/plugins/bootstrap-table/bootstrap-table.min.css}" rel="stylesheet"/>
-    <link th:href="@{/static/css/animate.css}" rel="stylesheet"/>
-    <link th:href="@{/static/css/plugins/chosen/chosen.css}" rel="stylesheet"/>
-    <link th:href="@{/static/css/style.css}" rel="stylesheet"/>
-    <link th:href="@{/static/css/font-awesome.min.css}" rel="stylesheet"/>
-    <link th:href="@{/static/css/style.css}" rel="stylesheet"/>
-    <link th:href="@{/static/css/plugins/toastr/toastr.min.css}" rel="stylesheet"/>
-    <link rel="stylesheet" th:href="@{/static/css/jquery-ui.css}"/>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <link href="https://libs.cdnjs.net/font-awesome/5.8.2/css/all.min.css" rel="stylesheet"/>
+
 </head>
-<body class="gray-bg">
+<body>
 <div class="wrapper wrapper-content ">
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-content">
-                    <form class="form-horizontal m-t" id="signupForm">
-                        <input id="id" type="hidden" name="id" th:value="${image.id}"/>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">图片*：</label>
-                            <div class="col-sm-8">
-                                <input id="file" type="file" name="file" accept="image/jpeg, image/png, image/jpg"
-                                       class="form-control"/>
-                                <input type="hidden" name="url" id="image"/>
-                                <img th:src="${image.url}" style="height: 100px;height: 100px;"/>
-                            </div>
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <form id="signupForm">
+                    <div class="form-group row">
+                        <label for="file" class="col-sm-3 col-form-label text-right">图片*：</label>
+                        <div class="col-sm-6">
+                            <input id="file" type="file" accept="image/jpeg, image/png, image/jpg"
+                                   class="form-control-file"/>
+                            <input type="hidden" name="url" id="image"/>
+                            <img th:src="${image.url}" style="height: 100px;height: 100px;"/>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">图片名*：</label>
-                            <div class="col-sm-8">
-                                <input type="text" id="name" name="name" th:value="${image.name}" class="form-control" />
-                            </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="name" class="col-sm-3 col-form-label text-right">图片名*：</label>
+                        <div class="col-sm-6">
+                            <input id="name" name="name" autocomplete="off" class="form-control" type="text" th:value="${image.name}"/>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">图片描述*：</label>
-                            <div class="col-sm-8">
-                                <input name="description" id="description" class="form-control" type="text"
-                                       th:value="${image.description}"></input>
-                            </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label  text-right">图片描述：</label>
+                        <div class="col-sm-6">
+                            <input name="description" autocomplete="off" class="form-control" th:value="${image.description}"
+                                   type="text"></input>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">图片链接地址*：</label>
-                            <div class="col-sm-8">
-                                <input name="link" id="link" class="form-control " type="text"
-                                       th:value="${image.link}"></input>
-                            </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label  text-right">图片链接地址：</label>
+                        <div class="col-sm-6">
+                            <input name="link" autocomplete="off" class="form-control" type="text" th:value="${image.link}"/>
                         </div>
+                    </div>
 
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">职位：</label>
-                            <div class="col-sm-8">
-                                <select class="form-control" id="position" name="position">
-                                    <option value="">--请选择位置--</option>
-                                    <option th:selected="${image.position==1}" value="1">轮播图</option>
-                                    <option th:selected="${image.position==2}" value="2">首页普通图</option>
-                                    <option th:selected="${image.position==3}" value="3">详情图</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">排序：</label>
-                            <div class="col-sm-8">
-                                <input name="sort" id="sort" class="form-control" th:value="${image.sort}"
-                                       type="text"></input>
-                            </div>
-                        </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label  text-right">职位：</label>
+                        <div class="col-sm-6">
+                            <select class="form-control" id="position" name="position">
+                                <option value="">--请选择位置--</option>
+                                <option th:each="position:${positions}" th:value="${position.getId()}"
+                                        th:text="${position.getDictName()}" th:selected="${position.getId()==image.position}">
 
-                        <div class="form-group">
-                            <div class="col-sm-8 col-sm-offset-3">
-                                <button type="button" class="btn btn-primary" onclick="back()">取消</button>
-                                <button type="submit" class="btn btn-primary" onclick="save()" id="subForm">保存</button>
-                            </div>
+                                </option>
+                            </select>
                         </div>
-                    </form>
-                </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label  text-right">排序：</label>
+                        <div class="col-sm-6">
+                            <input name="sort" autocomplete="off" class="form-control" type="text" th:value="${image.sort}"/>
+                        </div>
+                    </div>
+                    <div id="dialog_large_image"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label  text-right"></label>
+                        <div class="col-sm-5 float-right">
+                            <button type="button" class="btn btn-primary" onclick="back()">取消</button>
+                            <button type="submit" class="btn btn-primary" onclick="save();" id="subForm">保存
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
-<!-- 全局JS -->
-<script type="text/javascript" th:src="@{/static/js/jquery.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/jquery-ui-1.10.4.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/bootstrap.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/plugins/bootstrap-table/bootstrap-table.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js}"></script>
-<script type="text/javascript"
-        th:src="@{/static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/plugins/validate/jquery.validate.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/plugins/validate/messages_zh.min.js}"></script>
 
-<script type="text/javascript" th:src="@{/static/js/plugins/chosen/chosen.jquery.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/plugins/layer/layer.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/content.js}"></script>
-
-<script type="text/javascript" th:src="@{/static/js/ajax-util.js}"></script>
-
-<script type="text/javascript" th:src="@{/static/js/script.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/plugins/layer/layer.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/appjs/admin/edit.js}"></script>
 </body>
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+<script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script src="https://cdn.bootcss.com/layer/2.3/layer.js"></script>
+<script type="text/javascript" th:src="@{/static/js/appjs/admin/edit.js}"></script>
 </html>

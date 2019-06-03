@@ -36,11 +36,11 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public PageInfo<Image> findPage(Integer position, Integer pageNo, Integer pageSize) {
+    public PageInfo<Image> findPage(Integer position, Integer pageNo, Integer pageSize, String order, String orderName) {
         PageHelper.startPage(pageNo, pageSize);
         Example example = new Example(Image.class);
         example.createCriteria().andEqualTo("position", position);
-        example.setOrderByClause("position Asc,sort ASC");
+        example.setOrderByClause(orderName+" "+order);
 
         List<Image> list = mapper.selectByExample(example);
         return new PageInfo<>(list);

@@ -16,7 +16,7 @@ public interface ImageService {
 
     List<Image> findAll();
 
-    PageInfo<Image> findPage(Integer position, Integer pageNo, Integer pageSize);
+    PageInfo<Image> findPage(Integer position, Integer pageNo, Integer pageSize, String order, String orderName);
 
     void saveOrUpdate(Image image);
 

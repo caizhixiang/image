@@ -1,6 +1,6 @@
 
 server: 
-    port: 8080
+    port: 80
     context-path: /image
     use-forward-headers: true
     tomcat:
@@ -23,12 +23,12 @@ spring:
       force: true
     multipart:
       enabled: true
-      max-file-size: 13Mb
-      max-request-size: 13Mb
+      max-file-size: 10Mb
+      max-request-size: 10Mb
   main:
     banner-mode: 'OFF'
   application:
-    name: ziku-forte-admin
+    name: com-cai
     version: '@project.version@'
   datasource: 
     url: jdbc:mysql://www.zhiab.com:3306/website?useSSL=false&useUnicode=true&characterEncoding=UTF-8
@@ -94,7 +94,7 @@ security:
   basic:
     enabled: false
 logging:
-  file: /var/log/cai-ms/${spring.application.name}.log
+  file: /var/log/com-cai/${spring.application.name}.log
   level:
     root: INFO
     druid.sql.DataSource: DEBUG
@@ -106,8 +106,7 @@ logging:
     com.ibatis.common.jdbc.ScriptRunner: INFO
     com.ibatis.common.jdbc.SimpleDataSource: INFO
     org.springframework.web: DEBUG
-    com.ziku.forte: DEBUG
-
+    com.caizhixiang.springboot: DEBUG
 
 #平台配置参数
 image:

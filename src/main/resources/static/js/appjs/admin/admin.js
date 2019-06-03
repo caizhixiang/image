@@ -6,8 +6,8 @@ $(function() {
 });
 
 function load() {
-    $('#exampleTable')
-        .bootstrapTable(
+    $('#exampleTable').bootstrapTable()
+    $('#exampleTable').bootstrapTable(
             {
                 method : 'get', // 服务器数据的请求方式 get or
                 // post

@@ -61,7 +61,7 @@ public class AdminController {
         List<Dict> positions = dictService.findByCategory(DictEnum.IMAGE_POSITION.getCode());
 
         modelAndView.addObject("positions", positions);
-        modelAndView.setViewName("admin/index");
+        modelAndView.setViewName("admin/index1");
         return modelAndView;
     }
 
@@ -80,15 +80,18 @@ public class AdminController {
         ModelAndView modelAndView = new ModelAndView();
         Image image = imageService.findById(id);
         modelAndView.addObject("image", image);
+        List<Dict> positions = dictService.findByCategory(DictEnum.IMAGE_POSITION.getCode());
+
+        modelAndView.addObject("positions", positions);
         modelAndView.setViewName("admin/edit");
         return modelAndView;
     }
 
 
     @RequestMapping("/findPage")
-    public PageInfo<Image> findAll(Integer position, @RequestParam(required = false, defaultValue = "1") Integer pageNo, @RequestParam(required = false, defaultValue = "20") Integer PageSize) {
+    public PageInfo<Image> findAll(Integer position, @RequestParam(required = false, defaultValue = "1") Integer pageNo, @RequestParam(required = false, defaultValue = "20") Integer pageSize,String order,String orderName) {
 
-        return imageService.findPage(position, pageNo, PageSize);
+        return imageService.findPage(position, pageNo, pageSize,order,orderName);
     }
 
     @RequestMapping("/saveOrUpdate")

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Hello</title>
+
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://unpkg.com/bootstrap-table@1.14.2/dist/bootstrap-table.min.css" rel="stylesheet"/>
+
+    <link href="https://libs.cdnjs.net/font-awesome/5.8.2/css/all.min.css" rel="stylesheet"/>
+
+    <style>
+        .table th, .table td {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+    </style>
+</head>
+<body class="gray-bg">
+<div class="container ">
+
+    <div class="row">
+        <div class="ibox">
+            <div class="ibox-body">
+                <div class="fixed-table-toolbar  col-4">
+                    <select class="form-control" id="position">
+                        <option value="">--请选择位置--</option>
+                        <option th:each="position:${positions}" th:value="${position.getId()}"
+                                th:text="${position.getDictName()}"></option>
+                    </select>
+                </div>
+
+                <div class="query-div col-3 float-right">
+                    <button type="button" class="btn  btn-primary" onclick="add()">
+                        <i class="fa fa-plus hidden" aria-hidden="true"></i>添加
+                    </button>
+                    <button class="btn btn-success" id="sub">查询</button>
+                    <button class="btn btn-success" onclick="clean_form()">清空</button>
+                </div>
+                <table id="table" class="table table-striped table-hover">
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+<script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script src="https://unpkg.com/bootstrap-table@1.14.2/dist/bootstrap-table.min.js"></script>
+
+<script src="https://cdn.bootcss.com/layer/2.3/layer.js"></script>
+<script type="text/javascript" th:src="@{/static/js/appjs/admin/admin1.js}"></script>
+
+</html>
