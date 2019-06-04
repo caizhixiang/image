@@ -4,8 +4,10 @@ package com.caizhixiang.springboot.web;
 import com.caizhixiang.springboot.config.PropertyFtpConfig;
 import com.caizhixiang.springboot.exception.BizException;
 import com.caizhixiang.springboot.ftp.FtpClient;
+import com.caizhixiang.springboot.mapper.entity.Detail;
 import com.caizhixiang.springboot.mapper.entity.Dict;
 import com.caizhixiang.springboot.mapper.entity.Image;
+import com.caizhixiang.springboot.service.DetailService;
 import com.caizhixiang.springboot.service.DictService;
 import com.caizhixiang.springboot.service.ImageService;
 import com.caizhixiang.springboot.service.enums.DictEnum;
@@ -53,6 +55,8 @@ public class AdminController {
     private PropertyFtpConfig propertyFtpConfig;
     @Autowired
     private DictService dictService;
+    @Autowired
+    private DetailService detailService;
 
     @RequestMapping("/index")
     public ModelAndView index() {
@@ -89,13 +93,13 @@ public class AdminController {
 
 
     @RequestMapping("/findPage")
-    public PageInfo<Image> findAll(Integer position, @RequestParam(required = false, defaultValue = "1") Integer pageNo, @RequestParam(required = false, defaultValue = "20") Integer pageSize,String order,String orderName) {
+    public PageInfo<Image> findAll(Integer position, @RequestParam(required = false, defaultValue = "1") Integer pageNo, @RequestParam(required = false, defaultValue = "20") Integer pageSize, String order, String orderName) {
 
-        return imageService.findPage(position, pageNo, pageSize,order,orderName);
+        return imageService.findPage(position, pageNo, pageSize, order, orderName);
     }
 
     @RequestMapping("/saveOrUpdate")
-    public ApiResult saveOrUpdate( Image image) throws IOException {
+    public ApiResult saveOrUpdate(Image image) throws IOException {
 
         imageService.saveOrUpdate(image);
         return new ApiResult();
@@ -112,7 +116,7 @@ public class AdminController {
 
     @RequestMapping("/upload")
     @ResponseBody
-    ApiResult upload(@RequestParam("file") MultipartFile file, Integer id) throws Exception {
+    ApiResult upload(@RequestParam("file") MultipartFile file) throws Exception {
         String originalFilename = file.getOriginalFilename();
         Boolean flag = ftpClient.uploadFile(originalFilename, ImageUtil.saveMinPhoto(file.getInputStream()));
         if (!flag) {
@@ -121,6 +125,24 @@ public class AdminController {
         String fileUrl = this.appendUrl(propertyFtpConfig.getUrlPrefix(), originalFilename);
 
         return new ApiResult(fileUrl);
+    }
+
+    @RequestMapping("/detail/{id}")
+    public ModelAndView detail(@PathVariable Integer id) {
+        ModelAndView modelAndView = new ModelAndView();
+
+        modelAndView.addObject("imageId", id);
+        Detail detail = detailService.findById(id);
+        modelAndView.addObject("id", detail==null?null:detail.getId());
+        modelAndView.setViewName("admin/detail");
+        return modelAndView;
+    }
+
+    @RequestMapping("/saveOrUpdateDetail")
+    public ApiResult saveOrUpdateDetail(Detail detail) throws IOException {
+
+        detailService.saveOrUpdate(detail);
+        return new ApiResult();
     }
 
     public String appendUrl(String first, String second) {
@@ -140,8 +162,6 @@ public class AdminController {
         }
         return first + second;
     }
-
-
 
 
 }

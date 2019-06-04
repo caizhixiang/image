@@ -69,7 +69,7 @@
             <!--表名-->
 
 
-            <table tableName="image">
+            <table tableName="detail">
                 <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
             </table>
 <!--

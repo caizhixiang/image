@@ -9,6 +9,9 @@ window.operateEvents = {
             content: 'edit/' + row.id // iframe的url
         });
     },
+    'click .detailBtn': function (e, value, row, index) {
+        window.location.href="detail/"+row.id;
+    },
     'click .removeBtn': function (e, value, row, index) {
         layer.confirm('确定要删除选中的记录？', {
             btn: ['确定', '取消']
@@ -153,6 +156,7 @@ $(function () {
                 formatter: function (value, row, index) {//赋予的参数
                     return [
                         '<button class="btn btn-info btn-sm rightSize editBtn" type="button"><i class="fa fa-edit"></i> 编辑</button>',
+                        '<button class="btn btn-danger btn-sm rightSize detailBtn" type="button"><i class="fa fa-edit"></i> 编辑详情页面</button>',
                         '<button class="btn btn-danger btn-sm rightSize removeBtn" type="button"><i class="fa fa-remove"></i> 删除</button>'
                     ].join('');
                 } //自定义方法，添加操作按钮
