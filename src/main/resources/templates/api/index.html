@@ -5,46 +5,60 @@
     <title>首页</title>
     <meta name="description" content="mobile first, app, web app, responsive, admin dashboard, flat, flat ui"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.bootcss.com/fullPage.js/3.0.5/fullpage.min.css" rel="stylesheet"/>
+    <style>
 
+        .section {
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            -moz-background-size: 100% 100%;
+        }
+
+
+    </style>
 </head>
 
 <body>
 
-<div   th:each="image:${images}">
+<!--
+<div id="main_body">
+    　　
+    <div class="section" th:each="image:${images}">
 
-    <img class="img-fluid"  th:data="${image.url}"/>
+        <img  th:src="${image.url}"/>
 
+    </div>
+    　　
+</div>-->
+
+<div id="main_body">
+    　　
+    <!--<div class="section" th:each="image:${images}" th:background="url(${image.url})">-->
+    <div class="section" th:each="image:${images}" th:style="'background:url(' + ${image.url} + ') no-repeat;'">
+    </div>
 </div>
 
 <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/fullPage.js/3.0.5/fullpage.min.js"></script>
+<script src="https://cdn.bootcss.com/fullPage.js/3.0.5/vendors/scrolloverflow.min.js"></script>
 
-<script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-<script type="text/javascript" th:src="@{/static/js/power-slider.js}"></script>
-<!--
-<script type="text/javascript" th:src="@{/static/js/jquery.screenscroll.js}"></script>
--->
-<script>
-    $("img").each(function () {
+<script type="text/javascript">
+   /* $("img").each(function () {
         $(this).css("height", $(window).height());
 
         $(this).css("width", $(window).width());
-        this.parentNode.setAttribute("height",$(window).height())
-    })
-    /*var list = document.getElementsByTagName("img");
-    $(function () {
-        showImg1(list[0]);
-    })
-    function showImg1(item) {
-        var data = item.getAttribute("data");
-        item.setAttribute("src", data);
-    }
 
-    $("#slider").powerSlider();
-*/
+        $(this).attr("data-src", $(this).attr("data"));
+        // this.parentNode.setAttribute("height", $(window).height())
+    })*/
+
+    $(document).ready(function () {
+        $('#main_body').fullpage({
+            // sectionsColor: ['red', 'blue', 'yellow', 'green', 'purple'],
+            scrollOverflow: true
+        });
+    })
 
 </script>
-<script type="text/javascript" th:src="@{/static/js/appjs/api/load.js}"></script>
 </body>
 </html>
