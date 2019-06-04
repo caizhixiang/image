@@ -1,12 +1,10 @@
-var list = document.getElementsByTagName("img");
-
 var num=0;
 $(function () {
     showImg(list[0]);
 })
 function showImg(item) {
     var data = item.getAttribute("data");
-    $("img").removeAttr("src")
+    // $("img").removeAttr("src")
     item.setAttribute("src", data);
 }
 
@@ -14,7 +12,6 @@ var scrollFunc = function(e) {
     ee = e || window.event;
 
     var fullheight = document.body.offsetHeight;
-    debugger;
     if (e.wheelDelta) { //IE/Opera/Chrome
         var a = e.wheelDelta;//向上为120，向下为-120
         if(a>0){//向上

@@ -177,7 +177,6 @@
                         }
                     } else if (delta < 0) {
                         // 向下滚
-                        debugger;
                         if (index < len - 1) {
                             var i = index;
                             index = index + 1;

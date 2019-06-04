@@ -4,29 +4,17 @@
     <meta charset="utf-8"/>
     <title>首页</title>
     <meta name="description" content="mobile first, app, web app, responsive, admin dashboard, flat, flat ui"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
 
 </head>
 
-<style>
-
-    .slider{height:100%; overflow:hidden; position:relative;}
-    .sliderbox{position:relative;}/*必须加这句css,否则向左右，上下滚动时会没有效果*/
-    li {list-style:none;}
-    ul,li{padding:0; margin:0;}
-</style>
 <body>
-<!--<div class="page"  >
-    <img th:each="image:${images}" th:data="${image.url}"/>
-</div>-->
-<div class="slider" id="slider">
-    <ul class="sliderbox">
-        <li th:each="image:${images}" >
-           <img th:data="${image.url}"/>
-        </li>
 
-    </ul>
+<div   th:each="image:${images}">
+
+    <img class="img-fluid"  th:data="${image.url}"/>
+
 </div>
 
 <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -34,8 +22,17 @@
 <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <script type="text/javascript" th:src="@{/static/js/power-slider.js}"></script>
+<!--
+<script type="text/javascript" th:src="@{/static/js/jquery.screenscroll.js}"></script>
+-->
 <script>
-    var list = document.getElementsByTagName("img");
+    $("img").each(function () {
+        $(this).css("height", $(window).height());
+
+        $(this).css("width", $(window).width());
+        this.parentNode.setAttribute("height",$(window).height())
+    })
+    /*var list = document.getElementsByTagName("img");
     $(function () {
         showImg1(list[0]);
     })
@@ -45,11 +42,7 @@
     }
 
     $("#slider").powerSlider();
-
-
-
-
-    ;
+*/
 
 </script>
 <script type="text/javascript" th:src="@{/static/js/appjs/api/load.js}"></script>
