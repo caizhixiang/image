@@ -10,7 +10,7 @@ window.operateEvents = {
         });
     },
     'click .detailBtn': function (e, value, row, index) {
-        window.location.href="detail/"+row.id;
+        window.location.href="/image/admin/detail/"+row.id;
     },
     'click .removeBtn': function (e, value, row, index) {
         layer.confirm('确定要删除选中的记录？', {

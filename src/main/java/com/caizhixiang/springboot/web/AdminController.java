@@ -16,25 +16,14 @@ import com.caizhixiang.springboot.service.util.ImageUtil;
 import com.caizhixiang.springboot.web.vo.ApiResult;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.imageio.ImageIO;
-import javax.swing.filechooser.FileSystemView;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -131,15 +120,18 @@ public class AdminController {
     public ModelAndView detail(@PathVariable Integer id) {
         ModelAndView modelAndView = new ModelAndView();
 
-        modelAndView.addObject("imageId", id);
         Detail detail = detailService.findById(id);
-        modelAndView.addObject("id", detail==null?null:detail.getId());
+        if (detail == null) {
+            detail = new Detail();
+            detail.setImageId(id);
+        }
+        modelAndView.addObject("detail", detail);
         modelAndView.setViewName("admin/detail");
         return modelAndView;
     }
 
     @RequestMapping("/saveOrUpdateDetail")
-    public ApiResult saveOrUpdateDetail(Detail detail) throws IOException {
+    public ApiResult saveOrUpdateDetail(Detail detail) {
 
         detailService.saveOrUpdate(detail);
         return new ApiResult();

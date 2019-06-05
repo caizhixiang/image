@@ -11,8 +11,9 @@
 </head>
 
 <body>
-<input type="hidden" name="imageId" th:value="${imageId}"/>
-<input type="hidden" name="id" th:value="${id}"/>
+<input type="hidden" id="imageId" name="imageId" th:value="${detail.imageId}"/>
+<input type="hidden" id="id" name="id" th:value="${detail.id}"/>
+<input type="hidden" id="code" th:value="${detail.code}"/>
 <div id="summernote"></div>
 <button id="save" class="btn btn-primary" onclick="save()" type="button">Save</button>
 </body>
@@ -30,6 +31,8 @@
 <!--<script src="https://cdn.bootcss.com/summernote/0.8.12/summernote-bs4.min.js"></script>-->
 <script src="https://cdn.bootcss.com/summernote/0.8.12/summernote.min.js"></script>
 
+<script src="https://cdn.bootcss.com/summernote/0.8.12/lang/summernote-zh-CN.js"></script>
+
 
 <script>
     $(function () {
@@ -37,6 +40,7 @@
             height: 300,
             tabsize: 2,
             lang: 'zh-CN',
+            placeholder :'',
             callbacks: {
                 onImageUpload: function (files) { //the onImageUpload API
                     console.log("图片上传" + files[0]);
@@ -45,7 +49,10 @@
             }
         });
 
-
+        if ($("#code").val()) {
+            $('#summernote').summernote('code', $("#code").val());
+            // $("#summernote").append($("#code").val());
+        }
     })
 
     function sendFile(file) {
@@ -66,13 +73,14 @@
             }
         });
     }
-    var save = function() {
+
+    var save = function () {
         var markup = $('#summernote').summernote('code');
-        debugger;
         $.ajax({
             data: {
-                id:$("#id").val(),
-                imageId:$("#imageId")
+                id: $("#id").val(),
+                imageId: $("#imageId").val(),
+                code: markup
             },
             type: "POST",
             url: "../saveOrUpdateDetail",

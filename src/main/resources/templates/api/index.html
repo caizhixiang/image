@@ -14,7 +14,9 @@
             -moz-background-size: 100% 100%;
         }
 
-
+       /* body{
+            cursor:url("../static/img/user.png"),auto;
+        }*/
     </style>
 </head>
 
@@ -34,7 +36,10 @@
 <div id="main_body">
     　　
     <!--<div class="section" th:each="image:${images}" th:background="url(${image.url})">-->
-    <div class="section" th:each="image:${images}" th:style="'background:url(' + ${image.url} + ') no-repeat;'">
+    <div class="section" th:each="image:${images}"
+         th:style="'background:url(' + ${image.url} + ') no-repeat;'"
+         th:onclick="'javascript: detail('+${image.id}+')'"
+    >
     </div>
 </div>
 
@@ -58,7 +63,9 @@
             scrollOverflow: true
         });
     })
-
+    function detail(id) {
+        window.location.href="/image/api/detail/"+id;
+    }
 </script>
 </body>
 </html>
