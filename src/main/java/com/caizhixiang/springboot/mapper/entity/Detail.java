@@ -15,13 +15,13 @@ public class Detail implements Serializable {
     @Column(name = "image_id")
     private Integer imageId;
 
+    @Column(name = "gmt_create")
+    private Date gmtCreate;
+
     /**
      * ä»£ç �
      */
     private String code;
-
-    @Column(name = "gmt_create")
-    private Date gmtCreate;
 
     private static final long serialVersionUID = 1L;
 
@@ -58,6 +58,20 @@ public class Detail implements Serializable {
     }
 
     /**
+     * @return gmt_create
+     */
+    public Date getGmtCreate() {
+        return gmtCreate;
+    }
+
+    /**
+     * @param gmtCreate
+     */
+    public void setGmtCreate(Date gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
+    /**
      * 获取ä»£ç �
      *
      * @return code - ä»£ç �
@@ -75,20 +89,6 @@ public class Detail implements Serializable {
         this.code = code == null ? null : code.trim();
     }
 
-    /**
-     * @return gmt_create
-     */
-    public Date getGmtCreate() {
-        return gmtCreate;
-    }
-
-    /**
-     * @param gmtCreate
-     */
-    public void setGmtCreate(Date gmtCreate) {
-        this.gmtCreate = gmtCreate;
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -97,8 +97,8 @@ public class Detail implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", imageId=").append(imageId);
-        sb.append(", code=").append(code);
         sb.append(", gmtCreate=").append(gmtCreate);
+        sb.append(", code=").append(code);
         sb.append("]");
         return sb.toString();
     }

@@ -101,7 +101,7 @@ $(function () {
                 sortable: false   //本列不可以排序
             },
             {
-                field: 'url',
+                field: 'thumUrl',
                 title: '图片',
                 align: 'center',
                 formatter: function (value, row, index) {

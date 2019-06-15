@@ -36,6 +36,12 @@ public class Image implements Serializable {
     private String link;
 
     /**
+     * ç¼©ç•¥å›¾
+     */
+    @Column(name = "thum_url")
+    private String thumUrl;
+
+    /**
      * æ‰€å¤„ä½�ç½®ï¼ˆå¯¹åº”dicté‡Œé�¢category=1æ—¶çš„dict_idï¼‰
      */
     private Integer position;
@@ -163,6 +169,24 @@ public class Image implements Serializable {
     }
 
     /**
+     * 获取ç¼©ç•¥å›¾
+     *
+     * @return thum_url - ç¼©ç•¥å›¾
+     */
+    public String getThumUrl() {
+        return thumUrl;
+    }
+
+    /**
+     * 设置ç¼©ç•¥å›¾
+     *
+     * @param thumUrl ç¼©ç•¥å›¾
+     */
+    public void setThumUrl(String thumUrl) {
+        this.thumUrl = thumUrl == null ? null : thumUrl.trim();
+    }
+
+    /**
      * 获取æ‰€å¤„ä½�ç½®ï¼ˆå¯¹åº”dicté‡Œé�¢category=1æ—¶çš„dict_idï¼‰
      *
      * @return position - æ‰€å¤„ä½�ç½®ï¼ˆå¯¹åº”dicté‡Œé�¢category=1æ—¶çš„dict_idï¼‰
@@ -246,6 +270,7 @@ public class Image implements Serializable {
         sb.append(", url=").append(url);
         sb.append(", description=").append(description);
         sb.append(", link=").append(link);
+        sb.append(", thumUrl=").append(thumUrl);
         sb.append(", position=").append(position);
         sb.append(", category=").append(category);
         sb.append(", sort=").append(sort);

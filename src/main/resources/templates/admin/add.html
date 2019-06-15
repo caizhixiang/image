@@ -7,73 +7,89 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
     <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.bootcss.com/font-awesome/5.8.2/css/all.min.css" rel="stylesheet"/>
+<style>
 
-    <link href="https://libs.cdnjs.net/font-awesome/5.8.2/css/all.min.css" rel="stylesheet"/>
 
+    img[src=""],img:not([src]){
+        opacity:0;
+    }
+</style>
 </head>
 <body>
 <div class="wrapper wrapper-content ">
-        <div class="col-sm-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-content">
-                    <form id="signupForm">
-                            <div class="form-group row">
-                                <label for="file" class="col-sm-3 col-form-label text-right">图片*：</label>
-                                <div class="col-sm-6">
-                                    <input id="file" type="file" accept="image/jpeg, image/png, image/jpg" class="form-control-file"/>
-                                    <img style="height: 100px;width: 100px;"/>
-                                    <input type="hidden" name="url" id="image"/>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="name" class="col-sm-3 col-form-label text-right">图片名*：</label>
-                                <div class="col-sm-6">
-                                    <input id="name" name="name" autocomplete="off" class="form-control" type="text"/>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-3 col-form-label  text-right">图片描述：</label>
-                                <div class="col-sm-6">
-                                    <input name="description" autocomplete="off" class="form-control"
-                                           type="text"></input>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-3 col-form-label  text-right">图片链接地址：</label>
-                                <div class="col-sm-6">
-                                    <input name="link" autocomplete="off" class="form-control" type="text"></input>
-                                </div>
-                            </div>
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <form id="signupForm">
+                    <div class="form-group row">
+                        <label for="file" class="col-sm-3 col-form-label text-right">首页大图*：</label>
+                        <div class="col-sm-6">
+                            <input id="file" type="file" accept="image/jpeg, image/png, image/jpg"
+                                   class="form-control-file"/>
+                            <img id="imgg" style="height: 100px;width: 100px;"/>
+                            <input type="hidden" name="url" id="image"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="file" class="col-sm-3 col-form-label text-right">缩略图*：</label>
+                        <div class="col-sm-6">
+                            <input id="thum" type="file" accept="image/jpeg, image/png, image/jpg"
+                                   class="form-control-file"/>
+                            <img id="thumImg" style="height: 100px;width: 100px;"/>
+                            <input type="hidden" name="thumUrl" id="thumUrl"/>
+                        </div>
+                    </div>
 
-                            <div class="form-group row">
-                                <label class="col-sm-3 col-form-label  text-right">职位：</label>
-                                <div class="col-sm-6">
-                                    <select class="form-control" id="position" name="position">
-                                        <option value="">--请选择位置--</option>
-                                        <option th:each="position:${positions}" th:value="${position.getId()}"
-                                                th:text="${position.getDictName()}"></option>
-                                    </select>
-                                </div>
-                            </div>
+                    <div class="form-group row">
+                        <label for="name" class="col-sm-3 col-form-label text-right">图片名*：</label>
+                        <div class="col-sm-6">
+                            <input id="name" name="name" autocomplete="off" class="form-control" type="text"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label  text-right">图片描述：</label>
+                        <div class="col-sm-6">
+                            <input name="description" autocomplete="off" class="form-control"
+                                   type="text"></input>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label  text-right">图片链接地址：</label>
+                        <div class="col-sm-6">
+                            <input name="link" autocomplete="off" class="form-control" type="text"></input>
+                        </div>
+                    </div>
 
-                            <div class="form-group row">
-                                <label class="col-sm-3 col-form-label  text-right">排序：</label>
-                                <div class="col-sm-6">
-                                    <input name="sort" autocomplete="off" class="form-control" type="text"></input>
-                                </div>
-                            </div>
-                            <div id="dialog_large_image"></div>
-                            <div class="form-group row">
-                                <label class="col-sm-3 col-form-label  text-right"></label>
-                                <div class="col-sm-5 float-right">
-                                    <button type="button" class="btn btn-primary" onclick="back()">取消</button>
-                                    <button type="submit" class="btn btn-primary" onclick="save();" id="subForm">保存
-                                    </button>
-                                </div>
-                            </div>
-                    </form>
-                </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label  text-right">职位：</label>
+                        <div class="col-sm-6">
+                            <select class="form-control" id="position" name="position">
+                                <option value="">--请选择位置--</option>
+                                <option th:each="position:${positions}" th:value="${position.getId()}"
+                                        th:text="${position.getDictName()}"></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label  text-right">排序：</label>
+                        <div class="col-sm-6">
+                            <input name="sort" autocomplete="off" class="form-control" type="text"></input>
+                        </div>
+                    </div>
+                    <div id="dialog_large_image"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label  text-right"></label>
+                        <div class="col-sm-5 float-right">
+                            <button type="button" class="btn btn-primary" onclick="back()">取消</button>
+                            <button type="submit" class="btn btn-primary" onclick="save();" id="subForm">保存
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
+        </div>
     </div>
 </div>
 

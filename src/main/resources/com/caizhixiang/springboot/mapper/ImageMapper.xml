@@ -11,6 +11,7 @@
     <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="link" jdbcType="VARCHAR" property="link" />
+    <result column="thum_url" jdbcType="VARCHAR" property="thumUrl" />
     <result column="position" jdbcType="INTEGER" property="position" />
     <result column="category" jdbcType="INTEGER" property="category" />
     <result column="sort" jdbcType="INTEGER" property="sort" />

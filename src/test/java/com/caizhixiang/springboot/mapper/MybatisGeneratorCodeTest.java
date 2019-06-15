@@ -1,5 +1,6 @@
 package com.caizhixiang.springboot.mapper;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.Configuration;
@@ -18,9 +19,8 @@ import java.util.List;
  * @author Xiongmw
  * @version 1.0.0
  */
+@Slf4j
 public class MybatisGeneratorCodeTest {
-
-	static final Logger LOG = LoggerFactory.getLogger(MybatisGeneratorCodeTest.class);
 
 	@Test
 	public void run() {
@@ -39,7 +39,7 @@ public class MybatisGeneratorCodeTest {
 				MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
 				myBatisGenerator.generate(null);
 			} catch (Exception e) {
-				LOG.error("mybatis generator code error!", e);
+				log.error("mybatis generator code error!", e);
 				throw new RuntimeException(e);
 			}
 		});

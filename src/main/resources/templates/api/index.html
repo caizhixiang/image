@@ -14,9 +14,9 @@
             -moz-background-size: 100% 100%;
         }
 
-       /* body{
-            cursor:url("../static/img/user.png"),auto;
-        }*/
+        /* body{
+             cursor:url("../static/img/user.png"),auto;
+         }*/
     </style>
 </head>
 
@@ -39,7 +39,18 @@
     <div class="section" th:each="image:${images}"
          th:style="'background:url(' + ${image.url} + ') no-repeat;'"
          th:onclick="'javascript: detail('+${image.id}+')'"
+         style="position:relative;"
     >
+        <div style="position:absolute;top:10px;left:10px;">
+            <span style="float:left">直白品牌策划有限公司 </span>
+        </div>
+
+        <div style="position:absolute;top:10px;right:100px;">
+            <span style="float: right"><a href="/image/api/more">作品</a></span>
+        </div>
+        <div style="position:absolute;top:10px;right:10px;">
+            <span><a href="http://www.baidu.com">联系我们</a></span>
+        </div>
     </div>
 </div>
 
@@ -48,23 +59,23 @@
 <script src="https://cdn.bootcss.com/fullPage.js/3.0.5/vendors/scrolloverflow.min.js"></script>
 
 <script type="text/javascript">
-   /* $("img").each(function () {
-        $(this).css("height", $(window).height());
+    /* $("img").each(function () {
+         $(this).css("height", $(window).height());
 
-        $(this).css("width", $(window).width());
+         $(this).css("width", $(window).width());
 
-        $(this).attr("data-src", $(this).attr("data"));
-        // this.parentNode.setAttribute("height", $(window).height())
-    })*/
-
-    $(document).ready(function () {
+         $(this).attr("data-src", $(this).attr("data"));
+         // this.parentNode.setAttribute("height", $(window).height())
+     })*/
+    $(function () {
         $('#main_body').fullpage({
-            // sectionsColor: ['red', 'blue', 'yellow', 'green', 'purple'],
+            // fixedElements: $("#fix"),
             scrollOverflow: true
         });
     })
+
     function detail(id) {
-        window.location.href="/image/api/detail/"+id;
+        window.location.href = "/image/api/detail/" + id;
     }
 </script>
 </body>

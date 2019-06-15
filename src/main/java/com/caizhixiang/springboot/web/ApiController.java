@@ -52,5 +52,15 @@ public class ApiController {
         return modelAndView;
     }
 
+    @RequestMapping("/more")
+    public ModelAndView more() {
+        ModelAndView modelAndView = new ModelAndView();
+        List<Image> images = imageService.findAll();
+
+        modelAndView.addObject("images", images);
+        modelAndView.setViewName("api/list");
+        return modelAndView;
+    }
+
 
 }
