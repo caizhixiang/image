@@ -1,12 +1,13 @@
 package com.caizhixiang.springboot.service.util;
 
 import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.geometry.Positions;
 
-import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageOutputStream;
-import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.InputStream;
 
 /**
  * @author caizhixiang
@@ -28,8 +29,18 @@ public class ImageUtil {
 
         Thumbnails.of(inputStream).scale(1).toOutputStream(bs);
         return new ByteArrayInputStream(bs.toByteArray());
+    }
 
+    /**
+     * 加上明水印
+     * @param inputStream 原图
+     * @throws Exception
+     */
+    public static void saveWaterMarkPhoto(InputStream inputStream) throws Exception {
+        ByteArrayOutputStream bs = new ByteArrayOutputStream();
 
+        BufferedImage bufferedImage = Thumbnails.of(new File("C:\\Users\\Administrator\\Desktop\\images\\zhiab\\logo.png")).scale(0.2).asBufferedImage();
+        Thumbnails.of(inputStream).watermark(Positions.BOTTOM_RIGHT,bufferedImage,0.5f).toFile(new File("C:\\Users\\Administrator\\Desktop\\images\\zhiab\\1.png"));
     }
 
 

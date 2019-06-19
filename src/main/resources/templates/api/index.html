@@ -6,6 +6,9 @@
     <meta name="description" content="mobile first, app, web app, responsive, admin dashboard, flat, flat ui"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <link href="https://cdn.bootcss.com/fullPage.js/3.0.5/fullpage.min.css" rel="stylesheet"/>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="icon" href="data:image/ico;base64,aWNv"/>
+
     <style>
 
         .section {
@@ -13,25 +16,28 @@
             background-size: 100% 100%;
             -moz-background-size: 100% 100%;
         }
+         li {
+             list-style-type: none;
+         }
 
-        /* body{
-             cursor:url("../static/img/user.png"),auto;
-         }*/
+
     </style>
 </head>
 
 <body>
 
-<!--
-<div id="main_body">
-    　　
-    <div class="section" th:each="image:${images}">
+<nav class="navbar fixed-top navbar-transparent" style="height: 50px;padding: 0px;">
+    <a class="navbar-brand" style="margin-left: 20px;padding: 0;" href="#">直白品牌策划有限公司</a>
+    <ul class="form-inline">
+        <li class="nav-item">
+            <a class="nav-link" href="/image/api/more">作品</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">联系我们</a>
+        </li>
+    </ul>
 
-        <img  th:src="${image.url}"/>
-
-    </div>
-    　　
-</div>-->
+</nav>
 
 <div id="main_body">
     　　
@@ -41,16 +47,7 @@
          th:onclick="'javascript: detail('+${image.id}+')'"
          style="position:relative;"
     >
-        <div style="position:absolute;top:10px;left:10px;">
-            <span style="float:left">直白品牌策划有限公司 </span>
-        </div>
 
-        <div style="position:absolute;top:10px;right:100px;">
-            <span style="float: right"><a href="/image/api/more">作品</a></span>
-        </div>
-        <div style="position:absolute;top:10px;right:10px;">
-            <span><a href="http://www.baidu.com">联系我们</a></span>
-        </div>
     </div>
 </div>
 

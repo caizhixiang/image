@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.caizhixiang.springboot</groupId>
     <artifactId>image</artifactId>
-    <version>1.0.0.RELEASE</version>
+    <version>1.0.1.RELEASE</version>
     <name>image</name>
     <description>Demo project for Spring Boot</description>
     <packaging>war</packaging>

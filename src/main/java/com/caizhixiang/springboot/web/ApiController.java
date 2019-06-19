@@ -62,5 +62,11 @@ public class ApiController {
         return modelAndView;
     }
 
+    @RequestMapping("/list")
+    public List<Image> list() {
+        return imageService.findAll();
+
+    }
+
 
 }
