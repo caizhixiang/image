@@ -2,12 +2,19 @@ package com.caizhixiang.springboot.service.impl;
 
 import com.caizhixiang.springboot.ftp.FtpClient;
 import com.caizhixiang.springboot.mapper.ImageMapper;
+import com.caizhixiang.springboot.mapper.entity.Dict;
 import com.caizhixiang.springboot.mapper.entity.Image;
+import com.caizhixiang.springboot.service.DictService;
 import com.caizhixiang.springboot.service.ImageService;
+import com.caizhixiang.springboot.web.vo.ImageRes;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.common.collect.Lists;
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
@@ -15,6 +22,7 @@ import tk.mybatis.mapper.entity.Example;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author caizhixiang
@@ -29,6 +37,8 @@ public class ImageServiceImpl implements ImageService {
     private ImageMapper mapper;
     @Autowired
     private FtpClient ftpClient;
+    @Autowired
+    private DictService dictService;
 
     @Override
     public List<Image> findAll() {
@@ -36,14 +46,31 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public PageInfo<Image> findPage(Integer position, Integer pageNo, Integer pageSize, String order, String orderName) {
+    public PageInfo<ImageRes> findPage(Integer category, Integer pageNo, Integer pageSize, String order, String orderName) {
+        PageInfo<ImageRes> result = new PageInfo();
         PageHelper.startPage(pageNo, pageSize);
         Example example = new Example(Image.class);
-        example.createCriteria().andEqualTo("position", position);
+        example.createCriteria().andEqualTo("category", category);
         example.setOrderByClause(orderName+" "+order);
 
         List<Image> list = mapper.selectByExample(example);
-        return new PageInfo<>(list);
+        List<ImageRes> imageRes = Lists.newArrayList();
+        if (CollectionUtils.isNotEmpty(list)) {
+            imageRes = list.stream().filter(n -> n != null).map(image -> {
+                ImageRes res = new ImageRes();
+                BeanUtils.copyProperties(image, res);
+                if (res.getCategory() != null) {
+                    Dict dict = dictService.findById(res.getCategory());
+                    if (dict != null) {
+                        res.setCategoryName(dict.getDictName());
+                    }
+                }
+                return res;
+            }).collect(Collectors.toList());
+        }
+        result.setList(imageRes);
+        result.setTotal(new PageInfo<>(list).getTotal());
+        return result;
     }
 
     @Override

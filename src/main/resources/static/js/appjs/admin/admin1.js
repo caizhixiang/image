@@ -70,7 +70,7 @@ $(function () {
                 pageSize: params.limit,
                 order: params.order,
                 orderName: params.sort,
-                position: $("#position").val()
+                category: $("#category").val()
             };
             return param;
         },
@@ -123,16 +123,15 @@ $(function () {
             },
             {
                 field: 'position',
-                title: '图片所处位置',
+                title: '图片所属类别',
                 align: 'center',
                 formatter: function (value, row, index) {
-                    if (value == '1') {
-                        return '<span class="label label-danger">轮播图</span>';
-                    } else if (value == '2') {
-                        return '<span class="label label-primary">首页普通图</span>';
-                    } else if (value == '3') {
-                        return '<span class="label label-primary">详情图</span>';
-                    }
+                    if (row.categoryName) {
+
+                        return '<span class="label label-danger">'+row.categoryName+'</span>';
+                    }else
+                        return "";
+
                 }
             },
             {

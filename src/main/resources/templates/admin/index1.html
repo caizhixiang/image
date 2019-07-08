@@ -29,10 +29,10 @@
         <div class="ibox">
             <div class="ibox-body">
                 <div class="fixed-table-toolbar  col-4">
-                    <select class="form-control" id="position">
-                        <option value="">--请选择位置--</option>
-                        <option th:each="position:${positions}" th:value="${position.getId()}"
-                                th:text="${position.getDictName()}"></option>
+                    <select class="form-control" id="category">
+                        <option value="">--请选择类别--</option>
+                        <option th:each="category:${categories}" th:value="${category.getId()}"
+                                th:text="${category.getDictName()}"></option>
                     </select>
                 </div>
 

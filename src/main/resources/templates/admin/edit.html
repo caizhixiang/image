@@ -67,10 +67,10 @@
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label  text-right">职位：</label>
                         <div class="col-sm-6">
-                            <select class="form-control" id="position" name="position">
-                                <option value="">--请选择位置--</option>
-                                <option th:each="position:${positions}" th:value="${position.getId()}"
-                                        th:text="${position.getDictName()}" th:selected="${position.getId()==image.position}">
+                            <select class="form-control" id="position" name="category">
+                                <option value="">--请选择图片类别--</option>
+                                <option th:each="category:${categories}" th:value="${category.getId()}"
+                                        th:text="${category.getDictName()}" th:selected="${category.getId()==image.position}">
 
                                 </option>
                             </select>

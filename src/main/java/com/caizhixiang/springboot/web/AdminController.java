@@ -14,6 +14,7 @@ import com.caizhixiang.springboot.service.enums.DictEnum;
 import com.caizhixiang.springboot.service.enums.ErrorCodeEnum;
 import com.caizhixiang.springboot.service.util.ImageUtil;
 import com.caizhixiang.springboot.web.vo.ApiResult;
+import com.caizhixiang.springboot.web.vo.ImageRes;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -51,9 +52,9 @@ public class AdminController {
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView();
 
-        List<Dict> positions = dictService.findByCategory(DictEnum.IMAGE_POSITION.getCode());
+        List<Dict> categories = dictService.findByCategory(DictEnum.IMAGE_CATEGORY.getCode());
 
-        modelAndView.addObject("positions", positions);
+        modelAndView.addObject("categories", categories);
         modelAndView.setViewName("admin/index1");
         return modelAndView;
     }
@@ -61,9 +62,9 @@ public class AdminController {
     @RequestMapping("/add")
     public ModelAndView toAddPage() {
         ModelAndView modelAndView = new ModelAndView();
-        List<Dict> positions = dictService.findByCategory(DictEnum.IMAGE_POSITION.getCode());
+        List<Dict> categories = dictService.findByCategory(DictEnum.IMAGE_CATEGORY.getCode());
 
-        modelAndView.addObject("positions", positions);
+        modelAndView.addObject("categories", categories);
         modelAndView.setViewName("admin/add");
         return modelAndView;
     }
@@ -73,18 +74,18 @@ public class AdminController {
         ModelAndView modelAndView = new ModelAndView();
         Image image = imageService.findById(id);
         modelAndView.addObject("image", image);
-        List<Dict> positions = dictService.findByCategory(DictEnum.IMAGE_POSITION.getCode());
+        List<Dict> categories = dictService.findByCategory(DictEnum.IMAGE_CATEGORY.getCode());
 
-        modelAndView.addObject("positions", positions);
+        modelAndView.addObject("categories", categories);
         modelAndView.setViewName("admin/edit");
         return modelAndView;
     }
 
 
     @RequestMapping("/findPage")
-    public PageInfo<Image> findAll(Integer position, @RequestParam(required = false, defaultValue = "1") Integer pageNo, @RequestParam(required = false, defaultValue = "20") Integer pageSize, String order, String orderName) {
+    public PageInfo<ImageRes> findAll(Integer category, @RequestParam(required = false, defaultValue = "1") Integer pageNo, @RequestParam(required = false, defaultValue = "20") Integer pageSize, String order, String orderName) {
 
-        return imageService.findPage(position, pageNo, pageSize, order, orderName);
+        return imageService.findPage(category, pageNo, pageSize, order, orderName);
     }
 
     @RequestMapping("/saveOrUpdate")

@@ -1,6 +1,7 @@
 package com.caizhixiang.springboot.service;
 
 import com.caizhixiang.springboot.mapper.entity.Image;
+import com.caizhixiang.springboot.web.vo.ImageRes;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public interface ImageService {
 
     List<Image> findAll();
 
-    PageInfo<Image> findPage(Integer position, Integer pageNo, Integer pageSize, String order, String orderName);
+    PageInfo<ImageRes> findPage(Integer category, Integer pageNo, Integer pageSize, String order, String orderName);
 
     void saveOrUpdate(Image image);
 

@@ -13,4 +13,6 @@ import java.util.List;
 
 public interface DictService {
     List<Dict> findByCategory(Byte category);
+
+    Dict findById(Integer id);
 }

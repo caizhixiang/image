@@ -28,4 +28,9 @@ public class DictServiceImpl implements DictService {
         return dictMapper.select(dict);
     }
 
+    @Override
+    public Dict findById(Integer id) {
+        return dictMapper.selectByPrimaryKey(id);
+    }
+
 }
