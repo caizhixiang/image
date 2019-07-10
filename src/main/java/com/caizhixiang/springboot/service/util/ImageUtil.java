@@ -40,7 +40,7 @@ public class ImageUtil {
         ByteArrayOutputStream bs = new ByteArrayOutputStream();
 
         BufferedImage bufferedImage = Thumbnails.of(new File("C:\\Users\\Administrator\\Desktop\\images\\zhiab\\logo.png")).scale(0.2).asBufferedImage();
-        Thumbnails.of(inputStream).watermark(Positions.BOTTOM_RIGHT,bufferedImage,0.5f).toFile(new File("C:\\Users\\Administrator\\Desktop\\images\\zhiab\\1.png"));
+        Thumbnails.of(inputStream).watermark(Positions.BOTTOM_RIGHT,bufferedImage,0.5f).toFile(new File("C:\\Users\\Administrator\\Desktop\\images\\zhiab\\zuopin.png"));
     }
 
 

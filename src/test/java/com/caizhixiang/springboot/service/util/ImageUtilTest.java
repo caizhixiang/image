@@ -31,7 +31,7 @@ public class ImageUtilTest {
         BufferedImage bufferedImage = Thumbnails.of(new File("C:\\Users\\Administrator\\Desktop\\images\\zhiab\\logo.png")).scale(0.3).asBufferedImage();
         Thumbnails.of(new File("C:\\Users\\Administrator\\Desktop\\images\\zhiab\\微信图片_1.jpg"))
                 .watermark(Positions.BOTTOM_RIGHT, bufferedImage, 1f)
-                .scale(1).toFile(new File("C:\\Users\\Administrator\\Desktop\\images\\zhiab\\1.png"));
+                .scale(1).toFile(new File("C:\\Users\\Administrator\\Desktop\\images\\zhiab\\zuopin.png"));
 
     }
 
@@ -44,7 +44,7 @@ public class ImageUtilTest {
         BufferedImage bufferedImage = Thumbnails.of(new File("C:\\Users\\Administrator\\Desktop\\images\\zhiab\\logo.png")).scale(0.3).asBufferedImage();
         Thumbnails.of(new File("C:\\Users\\Administrator\\Desktop\\images\\zhiab\\微信图片_1.jpg"))
                 .watermark(Positions.BOTTOM_RIGHT, bufferedImage, 1f)
-                .scale(1).toFile(new File("C:\\Users\\Administrator\\Desktop\\images\\zhiab\\1.png"));
+                .scale(1).toFile(new File("C:\\Users\\Administrator\\Desktop\\images\\zhiab\\zuopin.png"));
 
     }
 
