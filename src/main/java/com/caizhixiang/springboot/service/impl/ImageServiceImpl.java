@@ -106,4 +106,11 @@ public class ImageServiceImpl implements ImageService {
 
     }
 
+    @Override
+    public List<Image> findByCategory(Integer category) {
+        Image image = new Image();
+        image.setCategory(category);
+        return mapper.select(image);
+    }
+
 }

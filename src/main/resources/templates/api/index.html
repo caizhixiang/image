@@ -11,14 +11,15 @@
 
     <style>
 
-        .section {
+      /*  .section {
             background-repeat: no-repeat;
             background-size: 100% 100%;
             -moz-background-size: 100% 100%;
+        }*/
+
+        li {
+            list-style-type: none;
         }
-         li {
-             list-style-type: none;
-         }
 
 
     </style>
@@ -26,54 +27,46 @@
 
 <body>
 
-<nav class="navbar fixed-top navbar-transparent" style="height: 60px;padding: 0px;">
-    <a class="navbar-brand" style="margin-left: 20px;padding: 0;" href="#"><img th:src="@{/static/img/logo.png}" style="height: 30px; background-color: transparent;"/></a>
+<nav class="navbar fixed-top navbar-transparent" style="height: 60px;padding: 0px;margin-top: 15px;">
+    <a class="navbar-brand" style="margin-left: 20px;padding: 0;" href="#">
+        <img th:src="@{/static/img/logo.png}" style="height: 38px; background-color: transparent;"/>
+    </a>
     <ul class="form-inline">
         <li class="nav-item">
-            <a class="nav-link" href="/image/api/more"><img th:src="@{/static/img/zuopin.png}" style="height: 20px; background-color: transparent;"/></a>
+            <a class="nav-link" href="/image/api/more"><img th:src="@{/static/img/zuopin.png}"
+                                                            style="height: 20px; background-color: transparent;"/></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#"><img th:src="@{/static/img/lianxi.png}" style="height: 20px; background-color: transparent;"/></a>
+            <a class="nav-link" href="#"><img th:src="@{/static/img/lianxi.png}"
+                                              style="height: 20px; background-color: transparent;"/></a>
         </li>
     </ul>
 
 </nav>
 
-<div id="main_body">
-    　　
-    <!--<div class="section" th:each="image:${images}" th:background="url(${image.url})">-->
+<div id="main_body" style="height: 100%; width: 100%; text-align: center;">
     <div class="section" th:each="image:${images}"
-         th:style="'background:url(' + ${image.url} + ') no-repeat;'"
          th:onclick="'javascript: detail('+${image.id}+')'"
-         style="position:relative;"
+         style="padding: 0px;"
     >
-
+        <img th:src="${image.url}" style="margin: 0px;width: 100%;
+                              height: 100%;"/>
     </div>
 </div>
+<input type="hidden" id="hid" th:value="${categories}"/>
 
+  <a class="carousel-control-prev" href="#" role="button" data-slide="prev" th:onclick="'javascript:previous(\''+${category}+'\');'" >
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#" role="button" data-slide="next" th:onclick="'javascript:next(\''+${category}+'\');'">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+  </a>
 <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/fullPage.js/3.0.5/fullpage.min.js"></script>
 <script src="https://cdn.bootcss.com/fullPage.js/3.0.5/vendors/scrolloverflow.min.js"></script>
+<script type="text/javascript" th:src="@{/static/js/appjs/api/index.js}"></script>
 
-<script type="text/javascript">
-    /* $("img").each(function () {
-         $(this).css("height", $(window).height());
-
-         $(this).css("width", $(window).width());
-
-         $(this).attr("data-src", $(this).attr("data"));
-         // this.parentNode.setAttribute("height", $(window).height())
-     })*/
-    $(function () {
-        $('#main_body').fullpage({
-            // fixedElements: $("#fix"),
-            scrollOverflow: true
-        });
-    })
-
-    function detail(id) {
-        window.location.href = "/image/api/detail/" + id;
-    }
-</script>
 </body>
 </html>

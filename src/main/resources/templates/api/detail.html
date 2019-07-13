@@ -9,7 +9,7 @@
         li {
             list-style-type: none;
         }
-
+       
 
        /* body{
             cursor:url("../../static/img/user.png"),auto;
@@ -22,8 +22,8 @@
 </head>
 
 <body>
-<nav class="navbar fixed-top navbar-transparent" style="height: 60px;padding: 0px;">
-    <a class="navbar-brand" style="margin-left: 20px;padding: 0;" href="#"><img th:src="@{/static/img/logo.png}" style="height: 30px; background-color: transparent;"/></a>
+<nav class="navbar fixed-top navbar-transparent" style="height: 60px;padding: 0px; margin-top: 15px;">
+    <a class="navbar-brand" style="margin-left: 20px;padding: 0;" href="#"><img th:src="@{/static/img/logo.png}" style="height: 38px; background-color: transparent;"/></a>
     <ul class="form-inline">
         <li class="nav-item">
             <a class="nav-link" href="/image/api/more"><img th:src="@{/static/img/zuopin.png}" style="height: 20px; background-color: transparent;"/></a>
@@ -39,15 +39,7 @@
 <div id="summernote"></div>
 </body>
 <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
-<script>
-    $(function () {
-
-        if ($("#code").val()) {
-            // $('#summernote').summernote('code', $("#code").val());
-            $("#summernote").append($("#code").val());
-        }
-    })
+<script type="text/javascript" th:src="@{/static/js/appjs/api/detail.js}"></script>
 
 
-</script>
 </html>

@@ -21,18 +21,20 @@ fileInput.addEventListener('change', function () {
         contentType: false,
         success: function (data) {
             if (data.errorCode == 0) {
-                $('#imgg').attr("src", data.data);
-                $("#image").val(data.data);
+                $('#imgg').attr("src", data.data.fileUrl);
+                $("#image").val(data.data.fileUrl);
+                $('#thumImg').attr("src", data.data.thumFileUrl);
+                $('#thumUrl').val(data.data.thumFileUrl);
             }
         }
     });
 
 })
 
+/*
 var thum = document.getElementById("thum");
 //选择文件
 thum.addEventListener('change', function () {
-
     //如果未传入文件则中断
     if (thum.files[0] == undefined) {
         return;
@@ -47,6 +49,8 @@ thum.addEventListener('change', function () {
         processData: false,
         contentType: false,
         success: function (data) {
+            debugger;
+            console.log(data);
             if (data.errorCode == 0) {
                 $('#thumImg').attr("src", data.data);
                 $('#thumUrl').val(data.data);
@@ -55,6 +59,7 @@ thum.addEventListener('change', function () {
     });
 
 })
+*/
 
 
 function back() {

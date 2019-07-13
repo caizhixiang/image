@@ -25,4 +25,10 @@ public interface ImageService {
 
     Image findById(Integer id);
 
+    /**
+     * 根据种类查询
+     * @param category
+     * @return
+     */
+    List<Image> findByCategory(Integer category);
 }

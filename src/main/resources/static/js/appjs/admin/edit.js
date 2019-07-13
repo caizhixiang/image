@@ -28,14 +28,17 @@ fileInput.addEventListener('change', function () {
         success: function (data) {
             if (data.errorCode == "0") {
                 debugger;
-                $('#imgg').attr("src", data.data);
-                $('#image').val(data.data);
+                $('#imgg').attr("src", data.data.fileUrl);
+                $('#image').val(data.data.fileUrl);
+                $('#thumImg').attr("src", data.data.thumFileUrl);
+                $('#thumUrl').val(data.data.thumFileUrl);
             }
         }
     });
 
 
 })
+/*
 var thum = document.getElementById("thum");
 //选择文件
 thum.addEventListener('change', function () {
@@ -61,6 +64,7 @@ thum.addEventListener('change', function () {
     });
 
 })
+*/
 
 function back() {
     var index = parent.layer.getFrameIndex(window.name); //获取窗口索引

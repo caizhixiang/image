@@ -16,7 +16,10 @@ import com.caizhixiang.springboot.service.util.ImageUtil;
 import com.caizhixiang.springboot.web.vo.ApiResult;
 import com.caizhixiang.springboot.web.vo.ImageRes;
 import com.github.pagehelper.PageInfo;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -26,6 +29,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author caizhixiang
@@ -107,14 +112,41 @@ public class AdminController {
     @RequestMapping("/upload")
     @ResponseBody
     ApiResult upload(@RequestParam("file") MultipartFile file) throws Exception {
+        Map<String, Object> map = Maps.newHashMap();
         String originalFilename = file.getOriginalFilename();
         Boolean flag = ftpClient.uploadFile(originalFilename, ImageUtil.saveMinPhoto(file.getInputStream()));
         if (!flag) {
             throw new BizException(ErrorCodeEnum.UPLOADFILEERROR);
         }
+        ftpClient.uploadFile("_thum_" + originalFilename, ImageUtil.saveQuarterPhoto(file.getInputStream()));
         String fileUrl = this.appendUrl(propertyFtpConfig.getUrlPrefix(), originalFilename);
+        String thumFileUrl = this.appendUrl(propertyFtpConfig.getUrlPrefix(), "_thum_" + originalFilename);
+        map.put("fileUrl", fileUrl);
+        map.put("thumFileUrl", thumFileUrl);
+        return new ApiResult(map);
+    }
 
-        return new ApiResult(fileUrl);
+    @RequestMapping("/uploadImgs")
+    @ResponseBody
+    ApiResult upload(@RequestParam("files") MultipartFile[] files) throws Exception {
+        List<String> list = Lists.newArrayList();
+        if (files != null && files.length > 0) {
+            //遍历并保存文件
+            for (MultipartFile file : files) {
+                String originalFilename = file.getOriginalFilename();
+                Boolean flag = ftpClient.uploadFile(originalFilename, ImageUtil.saveMinPhoto(file.getInputStream()));
+                if (!flag) {
+                    throw new BizException(ErrorCodeEnum.UPLOADFILEERROR);
+                }
+                String fileUrl = this.appendUrl(propertyFtpConfig.getUrlPrefix(), originalFilename);
+                list.add(fileUrl);
+            }
+        }
+        String urls = "";
+        if (CollectionUtils.isNotEmpty(list)) {
+            urls = list.stream().collect(Collectors.joining(","));
+        }
+        return new ApiResult(urls);
     }
 
     @RequestMapping("/detail/{id}")

@@ -41,11 +41,12 @@
             height: 300,
             tabsize: 2,
             lang: 'zh-CN',
-            placeholder :'',
+            placeholder: '',
             callbacks: {
                 onImageUpload: function (files) { //the onImageUpload API
-                    console.log("图片上传" + files[0]);
-                    img = sendFile(files[0]);
+
+                    console.log("图片上传" + files);
+                    img = sendFile(files);
                 }
             }
         });
@@ -56,21 +57,27 @@
         }
     })
 
-    function sendFile(file) {
-
+    function sendFile(files) {
+        debugger;
         var data = new FormData();
-        data.append("file", file);
+        for (var file in files) {
+            data.append("files", files[file]);
+        }
 
         $.ajax({
             data: data,
             type: "POST",
-            url: "../upload",
+            url: "../uploadImgs",
             cache: false,
             contentType: false,
             processData: false,
             success: function (data) {
                 console.log(data.data);
-                $("#summernote").summernote('insertImage', data.data, 'image name'); // the insertImage API
+                let split = data.data.split(",");
+                for (var image in split) {
+                    $("#summernote").summernote('insertImage', split[image], 'image name'); // the insertImage API
+
+                }
             }
         });
     }

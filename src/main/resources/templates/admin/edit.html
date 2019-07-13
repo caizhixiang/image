@@ -35,8 +35,8 @@
                     <div class="form-group row">
                         <label for="thum" class="col-sm-3 col-form-label text-right">缩略图*：</label>
                         <div class="col-sm-6">
-                            <input id="thum" type="file" accept="image/jpeg, image/png, image/jpg"
-                                   class="form-control-file"/>
+                           <!-- <input id="thum" type="file" accept="image/jpeg, image/png, image/jpg"
+                                   class="form-control-file"/>-->
                             <input type="hidden" th:value="${image.thumUrl}" name="thumUrl" id="thumUrl"/>
                             <img id="thumImg" th:src="${image.thumUrl}" style="height: 100px;width: 100px;"/>
                         </div>

@@ -32,6 +32,19 @@ public class ImageUtil {
     }
 
     /**
+     * 缩略图1/4
+     * @param inputStream
+     * @return
+     * @throws Exception
+     */
+    public static InputStream saveQuarterPhoto(InputStream inputStream) throws Exception {
+        ByteArrayOutputStream bs = new ByteArrayOutputStream();
+
+        Thumbnails.of(inputStream).scale(0.25f).toOutputStream(bs);
+        return new ByteArrayInputStream(bs.toByteArray());
+    }
+
+    /**
      * 加上明水印
      * @param inputStream 原图
      * @throws Exception
