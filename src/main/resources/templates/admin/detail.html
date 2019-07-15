@@ -95,6 +95,8 @@
             success: function (data) {
                 console.log(data.data);
                 $("#summernote").summernote('insertImage', data.data, 'image name'); // the insertImage API
+                layer.msg("保存成功");
+                history.back(-1);
             }
         });
         $('.click2edit').summernote('destroy');

@@ -36,7 +36,7 @@ public class ApiController {
      * @return
      */
     @RequestMapping("/index")
-    public ModelAndView index(@RequestParam(required = false,defaultValue = "1") Integer category) {
+    public ModelAndView index(@RequestParam(required = false,defaultValue = "4") Integer category) {
         ModelAndView modelAndView = new ModelAndView();
         List<Image> images = imageService.findAll();
         String categories = images.stream().filter(image -> image!=null&&image.getCategory()!=null).map(image -> image.getCategory().toString() ).distinct().collect(Collectors.joining(","));

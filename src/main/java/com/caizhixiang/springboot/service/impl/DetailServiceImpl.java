@@ -23,8 +23,17 @@ public class DetailServiceImpl implements DetailService {
     @Override
     public void saveOrUpdate(Detail detail) {
         if (detail.getId() == null) {
-            detail.setGmtCreate(new Date());
-            detailMapper.insertSelective(detail);
+            Integer imageId = detail.getImageId();
+            Detail det = new Detail();
+            det.setImageId(imageId);
+            Detail detail2 = detailMapper.selectOne(det);
+            if (detail2 == null) {
+                detail.setGmtCreate(new Date());
+                detailMapper.insertSelective(detail);
+            } else {
+                detail.setId(detail2.getId());
+                detailMapper.updateByPrimaryKeySelective(detail);
+            }
         }else {
             detailMapper.updateByPrimaryKeySelective(detail);
         }
